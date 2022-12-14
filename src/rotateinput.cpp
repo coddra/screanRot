@@ -23,6 +23,8 @@
 #include <X11/extensions/XInput2.h>
 #include <X11/Xatom.h>
 
+#include <filesystem>
+
 using namespace std;
 
 struct InputProperty {
@@ -136,7 +138,7 @@ RotateInput::RotateInput(QObject* parent) : QObject{parent}, d{new Private}
       d->devices.push_back(device);
   }
   XIFreeDeviceInfo(deviceInfo);
-  
+
   for(auto device: d->devices) {
     for(auto property: device.properties()) {
       qDebug() << "Device" << device.name << ", property:" << property.name << ", atom=" << property.atom << ", type: " << property.type;
@@ -178,4 +180,10 @@ void RotateInput::rotate(Orientation orientation)
     }
   }
 #endif
+  std::string s = orientation == Orientation::TopUp || orientation == Orientation::TopDown
+    ? "/home/coddra/.config/screanrot/landscape.sh"
+    : "/home/coddra/.config/screanrot/portrait.sh";
+  std::filesystem::path f{s};
+  if (std::filesystem::exists(f))
+    system((s + "&").c_str());
 }

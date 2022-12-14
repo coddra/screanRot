@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
+project(ScreanRot)
 
 find_package(Qt5 REQUIRED COMPONENTS Gui Widgets X11Extras Sensors DBus)
 
