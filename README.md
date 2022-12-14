@@ -24,7 +24,7 @@ sudo apt install -y git cmake build-essential qtbase5-dev libxrandr-dev libxi-de
 
 ## Installation
 
-To build end install ScreanRot, run the following commands:
+To build and install ScreanRot, run the following commands:
 
 ```
 git clone https://github.com/coddra/screanRot
