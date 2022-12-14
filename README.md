@@ -30,7 +30,6 @@ To build end install ScreanRot, run the following commands:
 git clone https://github.com/coddra/screanRot
 cd screanRot
 ./install.sh
-
 ```
 
 You can run the program by calling `sreenrotator`.
