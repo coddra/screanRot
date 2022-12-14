@@ -1,5 +1,8 @@
 # Simple Qt screen rotation manager
 
+This repository is a fork of GuLinux's [ScreenRotator](https://github.com/GuLinux/ScreenRotator) 
+with the added functionality of executing custom scripts whenever the rotation changes. More on this in the [configuration](#configuration) section.
+
 Reads from accelerometer sensors, and rotate display according to the readings.
 
 Works only in X11 for now.
@@ -33,3 +36,7 @@ sudo make install
 
 Main icon: https://www.iconfinder.com/icons/326583/orientation_rotation_screen_icon#size=256
 
+## Configuration
+
+Custom commands can be executed by editing `~/.config/screanrot/landscape.sh` or `~/.config/screanrot/portrait.sh`. 
+These shell scripts are invoked on entering landscape or portrait mode respectively.
