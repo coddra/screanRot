@@ -24,6 +24,7 @@
 #include <X11/Xatom.h>
 
 #include <filesystem>
+#include <unistd.h>
 
 using namespace std;
 
@@ -180,9 +181,10 @@ void RotateInput::rotate(Orientation orientation)
     }
   }
 #endif
+  std::string u{getlogin()};
   std::string s = orientation == Orientation::TopUp || orientation == Orientation::TopDown
-    ? "/home/coddra/.config/screanrot/landscape.sh"
-    : "/home/coddra/.config/screanrot/portrait.sh";
+    ? "/home/" + u + "/.config/screanrot/landscape.sh"
+    : "/home/" + u + "/.config/screanrot/portrait.sh";
   std::filesystem::path f{s};
   if (std::filesystem::exists(f))
     system((s + "&").c_str());
