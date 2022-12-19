@@ -3,6 +3,7 @@
 #include "orientationsensor.h"
 #include "trayicon.h"
 #include "rotateinput.h"
+#include "termhandler.h"
 #include <QtDBus/QDBusConnection>
 #include <QDebug>
 
@@ -14,11 +15,15 @@ int main(int argc, char *argv[])
       qCritical() << "Unable to register DBUS interface \"net.gulinux.ScreenRotator\". More than one instances running?";
       return 1;
     }
+
+    signal(SIGTERM, termHandler);
     
     DisplayManager displayManager;
     TrayIcon tray;
     OrientationSensor sensor;
     RotateInput rotateInput;
+    globalInputRotator = &rotateInput;
+    globalDisplayManager = &displayManager;
     QObject::connect(&sensor, &OrientationSensor::reading, &displayManager, &DisplayManager::setOrientation);
     QObject::connect(&sensor, &OrientationSensor::reading, &rotateInput, &RotateInput::rotate);
     return app.exec();

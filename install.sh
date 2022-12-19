@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 mkdir build
 cd build
