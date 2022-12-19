@@ -1,13 +1,14 @@
 # Simple Qt screen rotation manager
 
-This repository is a fork of GuLinux's [ScreenRotator](https://github.com/GuLinux/ScreenRotator) 
-with the added functionality of executing custom scripts whenever the rotation changes. More on this in the [configuration](#configuration) section.
+This repository is a fork of GuLinux's [ScreenRotator](https://github.com/GuLinux/ScreenRotator). 
 
-Reads from accelerometer sensors, and rotate display according to the readings.
+Extra functionalities:
+- executing custom scripts whenever the rotation changes
+- resetting rotation on recieving SIGTERM
 
-Works only in X11 for now.
+More on this in the [configuration](#configuration) section.
 
-Similar to the current solution implemented in Gnome, but works on all other desktop environments as well (KDE, XFCE, etc).
+Similar to the current solution implemented in Gnome, but works on all other X11 desktop environments as well (KDE, XFCE, etc).
 
 ## Compilation requirements
 
