@@ -38,9 +38,11 @@ void toggle_lock() {
 void reset() {
     auto tmp = expected_orientation;
     locked = false;
+    commands = false;
     global_manager->setOrientation(Orientation::TopUp);
     global_rotator->rotate(Orientation::TopUp);
     expected_orientation = tmp;
+    commands = true;
     qDebug() << "IPC message: reset";
 }
 

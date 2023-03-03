@@ -112,7 +112,4 @@ void DisplayManager::setOrientation(Orientation orientation)
   auto rotation = orientation2rotation[orientation];
   mediator.setRotation(rotation);
   d->currentOrientation = orientation;
-  current_orientation = orientation;
-  if (commands)
-    system(orientation == Orientation::TopUp || orientation == Orientation::TopDown ? landscape_command : portrait_command);
 }

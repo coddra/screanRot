@@ -188,4 +188,12 @@ void RotateInput::rotate(Orientation orientation)
     }
   }
 #endif
+  current_orientation = orientation;
+  if (commands) {
+    auto command = orientation == Orientation::TopUp || orientation == Orientation::TopDown ? landscape_command : portrait_command;
+    if (command != "") {
+      qDebug() << "Running command: " << command.c_str();
+      system(command.c_str());
+    }
+  }
 }

@@ -4,8 +4,9 @@ This repository is a fork of GuLinux's [ScreenRotator](https://github.com/GuLinu
 
 Extra functionalities:
 - lock, unlock or reset screen rotation with inter process communication
+- run shell commands on changing orientation
 
-See more in the [Messaging](#messaging)
+See more in the [Messaging](#messaging) and [Commands](#commands) section.
 
 Similar to the current solution implemented in Gnome, but works on all other X11 desktop environments as well (KDE, XFCE, I3, etc).
 
@@ -47,4 +48,15 @@ To send messages to an active `screenrotator`, use `sreenrotator-msg`. It accept
 - `reset`
 
 You can send multiple commands like this:
-`screenrotator-msg reset lock`
+```
+screenrotator-msg reset lock
+```
+
+## Commands
+
+You can pass the commands to execute on entering landscape or portrait mode as command line arguments. Prefix the commands with three dashes, like this:
+
+```
+screenrotator --- ~/.config/polybar/mode landscape --- ~/.config/polybar/mode portrait
+```
+

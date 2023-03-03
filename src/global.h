@@ -13,8 +13,8 @@ extern Orientation expected_orientation;
 extern RotateInput* global_rotator;
 extern DisplayManager* global_manager;
 
-extern const char* portrait_command;
-extern const char* landscape_command;
+extern std::string portrait_command;
+extern std::string landscape_command;
 extern bool commands;
 
 #endif // GLOBAL_H_
