@@ -3,12 +3,11 @@
 This repository is a fork of GuLinux's [ScreenRotator](https://github.com/GuLinux/ScreenRotator). 
 
 Extra functionalities:
-- executing custom scripts whenever the rotation changes
-- resetting rotation on recieving SIGTERM
+- lock, unlock or reset screen rotation with inter process communication
 
-More on this in the [configuration](#configuration) section.
+See more in the [Messaging](#messaging)
 
-Similar to the current solution implemented in Gnome, but works on all other X11 desktop environments as well (KDE, XFCE, etc).
+Similar to the current solution implemented in Gnome, but works on all other X11 desktop environments as well (KDE, XFCE, I3, etc).
 
 ## Compilation requirements
 
@@ -39,7 +38,13 @@ You can run the program by calling `sreenrotator`.
 
 Main icon: https://www.iconfinder.com/icons/326583/orientation_rotation_screen_icon#size=256
 
-## Configuration
+## Messaging
 
-Custom commands can be executed by editing `~/.config/screanrot/landscape.sh` or `~/.config/screanrot/portrait.sh`. 
-These shell scripts are invoked on entering landscape or portrait mode respectively.
+To send messages to an active `screenrotator`, use `sreenrotator-msg`. It accepts the following commands:
+- `lock`
+- `unlock`
+- `toggle-lock`
+- `reset`
+
+You can send multiple commands like this:
+`screenrotator-msg reset lock`

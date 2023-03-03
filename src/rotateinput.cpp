@@ -17,14 +17,12 @@
  */
 #include <QDebug>
 #include "rotateinput.h"
+#include "global.h"
 #include <QtX11Extras/QX11Info>
 #include <QList>
 
 #include <X11/extensions/XInput2.h>
 #include <X11/Xatom.h>
-
-#include <filesystem>
-#include <unistd.h>
 
 using namespace std;
 
@@ -152,6 +150,15 @@ RotateInput::~RotateInput()
 
 void RotateInput::rotate(Orientation orientation)
 {
+  expected_orientation = orientation;
+  if (locked) {
+    qDebug() << "Orientation is locked";
+    return;
+  }
+  if (current_orientation == orientation) {
+    qDebug() << "Device is already in given orientation";
+    return;
+  }
 #ifdef USE_XINPUT
   static QHash<Orientation, QStringList>  orientation_matrix_map {
     {TopUp, {"1", "0", "0", "0", "1", "0", "0", "0", "1"}},
@@ -181,11 +188,4 @@ void RotateInput::rotate(Orientation orientation)
     }
   }
 #endif
-  std::string u{getlogin()};
-  std::string s = orientation == Orientation::TopUp || orientation == Orientation::TopDown
-    ? "/home/" + u + "/.config/screanrot/landscape.sh"
-    : "/home/" + u + "/.config/screanrot/portrait.sh";
-  std::filesystem::path f{s};
-  if (std::filesystem::exists(f))
-    system((s + "&").c_str());
 }

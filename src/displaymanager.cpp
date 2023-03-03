@@ -18,10 +18,15 @@
 
 #include <QDebug>
 #include "displaymanager.h"
+#include "global.h"
 #include <QtX11Extras/QX11Info>
 #include <X11/extensions/Xrandr.h>
 #include <QTimer>
 #include <QHash>
+
+#include <filesystem>
+#include <unistd.h>
+
 
 struct DisplayManagerX11Mediator {
   Display *display;
@@ -84,6 +89,8 @@ DisplayManager::DisplayManager(QObject* parent) : QObject{parent}, d{new Private
 {
   DisplayManagerX11Mediator mediator;
   d->currentOrientation = d->to_orientation(mediator.rotation);
+  current_orientation = d->currentOrientation;
+  expected_orientation = current_orientation;
   qDebug() << "Current orientation: " << d->currentOrientation << ", rotation: " << mediator.rotation;
 }
 
@@ -93,10 +100,19 @@ DisplayManager::~DisplayManager()
 
 void DisplayManager::setOrientation(Orientation orientation)
 {
+  if (locked) {
+    qDebug() << "Orientation is locked";
+    return;
+  }
+  if (current_orientation == orientation) {
+    qDebug() << "Device is already in given orientation";
+    return;
+  }
   DisplayManagerX11Mediator mediator;
   auto rotation = orientation2rotation[orientation];
-  if(mediator.rotation == rotation)
-    return;
   mediator.setRotation(rotation);
   d->currentOrientation = orientation;
+  current_orientation = orientation;
+  if (commands)
+    system(orientation == Orientation::TopUp || orientation == Orientation::TopDown ? landscape_command : portrait_command);
 }
