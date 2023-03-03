@@ -7,5 +7,5 @@ mkdir build
 cd build
 cmake ..
 make all
-doas cp ../screenrotator-msg.sh /bin/screenrotator-msg
+sudo cp ../screenrotator-msg.sh /bin/screenrotator-msg
 sudo make install
