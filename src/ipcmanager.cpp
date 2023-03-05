@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <thread>
 #include <queue>
+#include <stdio.h>
 
 std::queue<std::string> messages;
 
@@ -15,7 +16,7 @@ IpcManager::~IpcManager() { }
 
 void lock() {
     locked = true;
-    qDebug() << "IPC message: locked";
+    qDebug() << "IPC message: lock";
 }
 
 void unlock() {
@@ -25,7 +26,7 @@ void unlock() {
         global_rotator->rotate(expected_orientation);
     } else
         locked = false;
-    qDebug() << "IPC message: unlocked";
+    qDebug() << "IPC message: unlock";
 }
 
 void toggle_lock() {
@@ -49,13 +50,13 @@ void reset() {
 void ipc()
 {
     const char* file = "/tmp/screenrotator";
+    remove(file); //resolves infinite ipc messages
     mkfifo(file, 0666);
     std::ifstream fifo{file};
     std::string line;
     while (1) {
         while (std::getline(fifo, line)) {
             messages.push(line);
-
         }
         //this is much more performant, than just clearing the file, for some reason
         fifo.close();
