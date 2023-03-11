@@ -10,4 +10,6 @@ DisplayManager* global_manager = NULL;
 
 std::string portrait_command = "";
 std::string landscape_command = "";
+std::string lock_command = "";
+std::string unlock_command = "";
 bool commands = true;

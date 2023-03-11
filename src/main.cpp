@@ -13,25 +13,29 @@ void processargs(int argc, char *argv[]) {
     unsigned char command = 0;
     std::string tmp;
     for (int i = 1; i < argc; i++) {
-        if (std::string(argv[i]) == "---") {
+        if (std::string(argv[i]) != "---" && command >= 1 && command <= 4)
+            tmp += " " + std::string(argv[i]);
+        if (std::string(argv[i]) == "---" || i == argc - 1) {
             if (tmp != "") {
                 switch (command) {
                     case 1:
-                        landscape_command = "/bin/bash" + tmp + " &";
-                        tmp = "";
+                        landscape_command = tmp + " &";
                         break;
                     case 2:
-                        portrait_command = "/bin/bash" + tmp + " &";
-                        tmp = "";
+                        portrait_command = tmp + " &";
+                        break;
+                    case 3:
+                        lock_command = tmp + " &";
+                        break;
+                    case 4:
+                        unlock_command = tmp + " &";
                         break;
                 }
+                tmp = "";
             }
             command++;
-        } else if (command == 1 || command == 2)
-            tmp += " " + std::string(argv[i]);
+        }
     }
-    if (command == 2 && tmp != "")
-        portrait_command = "/bin/bash" + tmp + " &";
 }
 
 int main(int argc, char *argv[])

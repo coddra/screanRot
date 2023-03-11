@@ -16,6 +16,10 @@ IpcManager::~IpcManager() { }
 
 void lock() {
     locked = true;
+    if (lock_command != "") {
+        qDebug() << "Running command: " << lock_command.c_str();
+        system(lock_command.c_str());
+    }
     qDebug() << "IPC message: lock";
 }
 
@@ -26,6 +30,10 @@ void unlock() {
         global_rotator->rotate(expected_orientation);
     } else
         locked = false;
+    if (unlock_command != "") {
+        qDebug() << "Running command: " << unlock_command.c_str();
+        system(unlock_command.c_str());
+    }
     qDebug() << "IPC message: unlock";
 }
 

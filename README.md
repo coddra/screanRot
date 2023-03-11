@@ -4,7 +4,7 @@ This repository is a fork of GuLinux's [ScreenRotator](https://github.com/GuLinu
 
 Extra functionalities:
 - lock, unlock or reset screen rotation with inter process communication
-- run shell commands on changing orientation
+- run shell commands on changing or locking orientation
 
 See more in the [Messaging](#messaging) and [Commands](#commands) section.
 
@@ -54,9 +54,9 @@ screenrotator-msg reset lock
 
 ## Commands
 
-You can pass the commands to execute on entering landscape or portrait mode as command line arguments. Prefix the commands with three dashes, like this:
+You can pass the commands to execute on entering landscape or portrait mode or locking or unlocking orientation as command line arguments. Prefix the commands with three dashes, like this:
 
 ```
-screenrotator --- ~/.config/polybar/mode landscape --- ~/.config/polybar/mode portrait
+screenrotator --- ~/.config/polybar/mode landscape --- ~/.config/polybar/mode portrait --- polybar-msg action lock hook 0 --- polybar-msg action lock hook 1
 ```
 
