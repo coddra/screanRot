@@ -17,6 +17,7 @@ extern std::string portrait_command;
 extern std::string landscape_command;
 extern std::string lock_command;
 extern std::string unlock_command;
-extern bool commands;
+
+void execcommand();
 
 #endif // GLOBAL_H_

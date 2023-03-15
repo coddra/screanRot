@@ -17,7 +17,6 @@
  */
 #include <QDebug>
 #include "rotateinput.h"
-#include "global.h"
 #include <QtX11Extras/QX11Info>
 #include <QList>
 
@@ -150,15 +149,6 @@ RotateInput::~RotateInput()
 
 void RotateInput::rotate(Orientation orientation)
 {
-  expected_orientation = orientation;
-  if (locked) {
-    qDebug() << "Orientation is locked";
-    return;
-  }
-  if (current_orientation == orientation) {
-    qDebug() << "Device is already in given orientation";
-    return;
-  }
 #ifdef USE_XINPUT
   static QHash<Orientation, QStringList>  orientation_matrix_map {
     {TopUp, {"1", "0", "0", "0", "1", "0", "0", "0", "1"}},
@@ -188,12 +178,4 @@ void RotateInput::rotate(Orientation orientation)
     }
   }
 #endif
-  current_orientation = orientation;
-  if (commands) {
-    auto command = orientation == Orientation::TopUp || orientation == Orientation::TopDown ? landscape_command : portrait_command;
-    if (command != "") {
-      qDebug() << "Running command: " << command.c_str();
-      system(command.c_str());
-    }
-  }
 }

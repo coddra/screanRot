@@ -100,14 +100,6 @@ DisplayManager::~DisplayManager()
 
 void DisplayManager::setOrientation(Orientation orientation)
 {
-  if (locked) {
-    qDebug() << "Orientation is locked";
-    return;
-  }
-  if (current_orientation == orientation) {
-    qDebug() << "Device is already in given orientation";
-    return;
-  }
   DisplayManagerX11Mediator mediator;
   auto rotation = orientation2rotation[orientation];
   mediator.setRotation(rotation);

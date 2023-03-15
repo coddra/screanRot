@@ -17,6 +17,7 @@
  */
 
 #include "orientationsensor.h"
+#include "global.h"
 #include <QOrientationSensor>
 #include <QHash>
 #include <QDebug>
@@ -39,7 +40,20 @@ OrientationSensor::OrientationSensor(QObject* parent) : QObject{parent}, d{new P
     if(! reading)
       return;
     if(d->to_orientation.keys().contains(reading->orientation())) {
-      emit this->reading(d->to_orientation[reading->orientation()]);
+      expected_orientation = d->to_orientation[reading->orientation()];
+      if (locked) {
+        qDebug() << "Orientation is locked";
+        return;
+      }
+      if (current_orientation == expected_orientation) {
+        qDebug() << "Device is already in given orientation";
+        return;
+      }
+
+      emit this->reading(expected_orientation);
+
+      current_orientation = expected_orientation;
+      execcommand();
     }
   });
   connect(&d->sensor, &QOrientationSensor::sensorError, this, [this](int error){

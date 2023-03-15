@@ -25,11 +25,12 @@ void lock() {
 
 void unlock() {
     if (locked && current_orientation != expected_orientation) {
-        locked = false;
         global_manager->setOrientation(expected_orientation);
         global_rotator->rotate(expected_orientation);
-    } else
-        locked = false;
+        current_orientation = expected_orientation;
+        execcommand();
+    }
+    locked = false;
     if (unlock_command != "") {
         qDebug() << "Running command: " << unlock_command.c_str();
         system(unlock_command.c_str());
@@ -45,13 +46,8 @@ void toggle_lock() {
 }
 
 void reset() {
-    auto tmp = expected_orientation;
-    locked = false;
-    commands = false;
     global_manager->setOrientation(Orientation::TopUp);
     global_rotator->rotate(Orientation::TopUp);
-    expected_orientation = tmp;
-    commands = true;
     qDebug() << "IPC message: reset";
 }
 
